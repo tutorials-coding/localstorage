@@ -1,8 +1,6 @@
 import { EventBus } from './EventBus';
 
 export class LocalStorageService {
-  eventBus = null;
-
   constructor() {
     this.eventBus = new EventBus();
     this.handleStorage = this.handleStorage.bind(this);
@@ -31,3 +29,5 @@ export class LocalStorageService {
     return () => this.eventBus.unsubscribe(key, cb);
   }
 }
+
+export const localStorageService = new LocalStorageService();

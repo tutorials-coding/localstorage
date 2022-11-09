@@ -1,31 +1,20 @@
-import { useEffect, useState } from 'react';
-import { LocalStorageService } from './LocalStorageService';
-import './App.css';
+import { useLocalStorageKey } from './useLocalStorageKey';
 
 const KEY_TOKEN = 'token';
 
-const localStorageService = new LocalStorageService();
-
 function App() {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useLocalStorageKey(KEY_TOKEN);
 
-  const handleAddTokenAClick = () =>
-    localStorageService.setItem(KEY_TOKEN, 'token_value_a');
+  const handleAddTokenAClick = () => {
+    setToken('token_value_a');
+  };
 
-  const handleAddTokenBClick = () =>
-    localStorageService.setItem(KEY_TOKEN, 'token_value_b');
-
-  useEffect(() => {
-    const onTokenUpdate = (token) => {
-      setToken(token);
-      console.log('onTokenUpdate', token);
-    };
-
-    return localStorageService.subscribe(KEY_TOKEN, onTokenUpdate);
-  }, []);
+  const handleAddTokenBClick = () => {
+    setToken('token_value_b');
+  };
 
   return (
-    <div className="App">
+    <>
       <button type="button" onClick={handleAddTokenAClick}>
         Add token 'a'
       </button>
@@ -35,7 +24,7 @@ function App() {
       </button>
 
       <p>Token: {token}</p>
-    </div>
+    </>
   );
 }
 
